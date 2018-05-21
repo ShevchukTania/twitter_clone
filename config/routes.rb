@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'following' => 'relationships#create'
-      post 'unfollowing' => 'relationships#destroy'
     end
   end
   root 'home#index'

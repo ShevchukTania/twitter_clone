@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @tweets = Tweet.all
   end
 
   def new
@@ -32,13 +33,11 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-
       redirect_to user_path
     else
       render :edit
     end
   end
-
 
   private
   def user_params
