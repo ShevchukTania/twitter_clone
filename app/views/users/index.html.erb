@@ -4,10 +4,10 @@
 		<%=link_to 'View Tweets', user_path(user[:id]), class: "btn btn-large" %>
     <% if current_user.id != user.id %>
       <% if current_user.following?(user) %>
-          <%=link_to 'Unfollow', render: 'unfollow' class: "btn btn-large" %>
+          <%= link_to 'Unfollow', relationship_path(current_user.active_relationships.find_by(followed_id: user.id)), method: :delete, class: "btn btn-large" %>
           <% else %>
-          <%=link_to 'Follow', following_path(user), class: "btn btn-large" %>
-        <% end %>
+          <%=link_to 'Follow', following_user_path(id: user.id), class: "btn btn-large" %>
+      <% end %>
     <% end %>
     <br>
 	<% end %>
