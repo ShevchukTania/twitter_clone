@@ -1,18 +1,11 @@
 <div class="profile clearfix">
-
-<%= link_to ( image_tag @user.avatar.url(:thumb), class: 'gravatar'), user_path(@user[:id]) if @user.avatar?%>
-
+<%= user_avatar(@user)%>
   <div><%= link_to @user.first_name+ ' ' + @user.last_name, user_path(@user[:id])%></div>
   <div><%= @user.email%></div>
   <div class="tweet-actions">
-    <%= link_to 'Edit', edit_user_path(@user[:id]) %>
+    <%= link_to 'Edit', edit_user_path(@user[:id]) if @user == current_user%>
   </div>
 </div>
-
-<div class="tweet-actions">
-
-</div>
-
 <div class="stats">
   <table>
     <tbody>
@@ -22,9 +15,15 @@
         <th>Followers</th>
       </tr>
       <tr>
-        <td><%= link_to Tweet.where(user_id: @user[:id]).count, tweets_show_path%></td>
-        <td><a href="/users/nazar/following">0</a></td>
-        <td><a href="/users/nazar/followers">0</a></td>
+        <td>
+          <%= link_to @user.tweets.count, user_tweets_path(user_id: @user.id)%>
+        </td>
+        <td>
+          <%= link_to @user.followings.count, followings_user_path(@user.id)%>
+        </td>
+        <td>
+          <%= link_to @user.followers.count, followers_user_path(@user.id)%>
+        </td>
       </tr>
     </tbody>
   </table>

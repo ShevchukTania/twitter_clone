@@ -1,15 +1,2 @@
-  <div>
-	<% @users.each do |user|%>
-		<%= user.first_name + ' ' + user.last_name %>
-		<%=link_to 'View Tweets', user_path(user[:id]), class: "btn btn-large" %>
-    <% if current_user.id != user.id %>
-      <% if current_user.following?(user) %>
-          <%= link_to 'Unfollow', relationship_path(current_user.active_relationships.find_by(followed_id: user.id)), method: :delete, class: "btn btn-large" %>
-          <% else %>
-          <%=link_to 'Follow', following_user_path(id: user.id), class: "btn btn-large" %>
-      <% end %>
-    <% end %>
-    <br>
-	<% end %>
-</div>
-<%=link_to 'Home', tweets_path, class: "btn btn-primary"  %>
+<h2>All Users</h2>
+<%= render partial: 'partials/show_user', locals: { users: User.all.paginate(:page => params[:page]) }%>

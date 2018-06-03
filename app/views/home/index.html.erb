@@ -1,17 +1,20 @@
 <%= render :partial => 'partials/nav_bar'%>
-
 <div class="container">
   <div class="row">
     <aside class="col-md-4">
+      <%= form_tag({controller: 'home', action: "search"}, method: "get", class: "input-group") do %>
+        <%= text_field_tag :user_name, params[:user_name], class: 'form-control', placeholder: 'Looking for someone?'%>
+        <span class="input-group-btn">
+          <%= submit_tag "Go!", name: nil, class: 'btn btn-default' %>
+        </span>
+      <% end %>
       <section>
-
-        <%= render :partial => 'partials/info_about_user'%>
-        <%= render :partial => 'partials/new_tweet'%>
+        <%= render 'partials/info_about_user'%>
+        <%= render 'partials/new_tweet'%>
       </section>
     </aside>
-
-    <div class="col-md-8">
-    <%= render :partial => 'partials/show_tweet' %>
+    <div class="col-md-8 tweets">
+      <%= render 'partials/tweet'%>
     </div>
   </div>
 </div>

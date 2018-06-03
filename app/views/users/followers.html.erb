@@ -1,0 +1,2 @@
+<h2>Followers of <%= link_to @user.first_name + ' ' + @user.last_name, user_path(@user.id)%></h2>
+<%= render partial: 'partials/show_user', locals: { users: @user.followers.paginate(:page => params[:page]) }%>

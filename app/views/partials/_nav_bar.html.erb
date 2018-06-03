@@ -25,14 +25,18 @@
         <% end %>
         </li>
 
-        <li><a href="/"><i class="fa fa-cog"></i><span>Setting</span></a></li>
+        <li><%= link_to edit_user_path(current_user), class: "page-scroll" do %>
+          <i class="fa fa-cog">Setting</i>
+        <% end %>
+        </li>
 
         <li><%= link_to log_out_path, method: :delete, class: "page-scroll" do %>
             <i class="fa fa-sign-out">Sign Out</i>
         <% end %>
         </li>
+
       </ul>
     </div>
-    <% end %>
+    <%end%>
 </div>
 </div>

@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user, only: [:new, :create]
+  before_action :init_new_user, only: [:show, :edit, :update, :followers, :followings]
 
   def index
-    @users = User.all
+    @users = User.paginate(:page => params[:page])
     @tweets = Tweet.all
   end
 
@@ -12,7 +13,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       redirect_to log_in_path
     else
@@ -20,18 +20,14 @@ class UsersController < ApplicationController
     end
   end
 
-
   def show
-    @user = User.find(params[:id])
-
+      @tweets = @user.tweets.paginate(:page => params[:page])
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       redirect_to user_path
     else
@@ -39,9 +35,23 @@ class UsersController < ApplicationController
     end
   end
 
+  def followers
+  end
+
+  def followings
+  end
+
+  def tweets
+    @user = User.find(params[:user_id])
+    @tweets = @user.tweets.paginate(:page => params[:page])
+  end
+
   private
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :avatar)
   end
 
+  def init_new_user
+    @user = User.find(params[:id])
+  end
 end
